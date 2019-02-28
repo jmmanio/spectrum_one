@@ -1,0 +1,50 @@
+{% extends 'movies/layout.html' %}
+{% load static %}
+
+
+{% block js %}
+    <script src="{% static 'movies/js/pages/index.js' %}"></script>
+{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'movies/css/index.css' %}"/>
+{% endblock %}
+
+
+{% block title %}{% block navtitle %}Movies List{% endblock %}{% endblock %}
+
+{% block content %}
+    <div class="box box-default">
+
+        <div class="box-header with-border">
+
+            <h3 class="box-title">&nbsp;</h3>
+            <div class="box-tools pull-right">
+
+                <button class="btn btn-box-tool" type="button" data-toggle="modal"
+                        data-target="#modal-add-movie">
+                    <i class="fa fa-plus-square fa-2x"></i> &nbsp;
+                    <span class="btn-box-tool-desc">Add</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="box-body">
+
+            {# Movies list #}
+            <table id="movies-list">
+                <thead>
+                <th>Title</th>
+                </thead>
+
+                <tbody></tbody>
+
+                <tfoot>
+                <th>Title</th>
+                </tfoot>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}
