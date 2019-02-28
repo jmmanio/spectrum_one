@@ -8,15 +8,20 @@
 
     <title>Movies</title>
 
+    {% load static %}
+    
     {# JS #}
     {% include 'cdn/js/jquery.html' %}
     {% include 'cdn/js/bootstrap.html' %}
     {% include 'cdn/js/admin-lte.html' %}
+    {% include 'cdn/js/datatables.html' %}
+    <script src="{% static 'movies/js/index.js' %}"></script>
 
     {# CSS #}
     {% include 'cdn/css/bootstrap.html' %}
     {% include 'cdn/css/font-awesome.html' %}
     {% include 'cdn/css/admin-lte.html' %}
+    {% include 'cdn/css/datatables.html' %}
 
     {# Font #}
     {% include 'cdn/font/source-sans-pro.html' %}
@@ -77,7 +82,22 @@
                         <h3 class="box-title">Blank Box</h3>
                     </div>
                     <div class="box-body">
-                        Content
+
+                        {# Movies list #}
+                        <table id="movies-list">
+                            <thead>
+                                <th>Title</th>
+                                <th>Year</th>
+                            </thead>
+
+                            <tbody></tbody>
+
+                            <tfoot>
+                                <th>Title</th>
+                                <th>Year</th>
+                            </tfoot>
+
+                        </table>
                     </div>
                     <!-- /.box-body -->
                 </div>
