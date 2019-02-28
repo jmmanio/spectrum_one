@@ -15,5 +15,9 @@ Including another URLconf
 """
 from django.urls import path
 
+import movies.views as movies
+
+
 urlpatterns = [
+    path('', movies.index, name='index'),
 ]
