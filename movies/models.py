@@ -1,3 +1,9 @@
 from django.db import models
 
-# Create your models here.
+
+class Movies(models.Model):
+    title = models.CharField(max_length=128)
+    year  = models.CharField(max_length=4)
+
+    class Meta:
+        db_table = 'movies'
