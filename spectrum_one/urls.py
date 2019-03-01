@@ -20,5 +20,6 @@ import movies.views as movies
 
 urlpatterns = [
     path('login', movies.login, name='login'),
+    path('register', movies.register, name='register'),
     path('', movies.index, name='index'),
 ]
