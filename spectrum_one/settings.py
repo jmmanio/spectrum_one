@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'authentication.apps.AuthenticationConfig',
     'cdn.apps.CdnConfig',
     'movies.apps.MoviesConfig',
 ]
