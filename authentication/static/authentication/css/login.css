@@ -1,0 +1,38 @@
+
+:root {
+    --theme-color:  #00A65A;
+    --txt-color:    #FFFFFF;
+}
+
+body {
+    height: 0;
+}
+
+.login-page {
+    background: #FFFFFF;
+}
+
+.login-box {
+    margin: 10% auto 0;
+}
+
+.login-box-body {
+    border-radius: 10px;
+}
+
+.login-logo i {
+    color: var(--theme-color);
+    margin-bottom: 10px;
+}
+
+button[type=submit] {
+    background-color: var(--theme-color);
+    border-color: transparent;
+    color: var(--txt-color);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--theme-color);
+    border-color: transparent;
+    color: var(--txt-color);
+}
