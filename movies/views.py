@@ -46,7 +46,7 @@ class Movies:
         if request.method == 'GET':
 
             title = request.GET.get('title')
-            
+
             try:
                 is_new = bool(request.GET.get('new'))
             except:
@@ -99,6 +99,25 @@ class Movies:
                 return JsonResponse({'success': False}, status=400)
 
         return redirect('/')
+
+    @staticmethod
+    def like(request):
+        if request.method == 'POST':
+
+            title = request.POST.get('title')
+
+            movie = models.Movies.objects.get(title=title)
+
+            try:
+                last_like = models.Likes.objects.filter(movies=movie).latest('timestamp')
+
+                new_like = models.Likes(movies=movie, is_liked=last_like.is_liked)
+                new_like.save()
+            except Exception as e:
+                new_like = models.Likes(movies=movie, is_liked=True)
+                new_like.save()
+
+            return HttpResponse()
 
     @staticmethod
     def delete(request):

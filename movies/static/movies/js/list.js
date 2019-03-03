@@ -2,6 +2,7 @@
 
 $(function () {
 
+    let $like_url = $('#movies-like-url');
     let $edit_url = $('#movies-edit-url');
     let $delete_url = $('#movies-delete-url');
 
@@ -21,7 +22,8 @@ $(function () {
             "columnDefs": [{
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<button class='btn-edit'>Edit</button>&nbsp;&nbsp;<button class='btn-delete'>Delete</button>"
+                "defaultContent": "<button class='btn-edit'>Edit</button>&nbsp;&nbsp;<button class='btn-delete'>Delete</button>" +
+                    "&nbsp;&nbsp;<button class='btn-like'>Like</button>"
             }]
         });
 
@@ -35,9 +37,27 @@ $(function () {
             $delete_modal.modal('show');
         });
 
+        //
+        // Redirect to edit page on 'Edit' action button click
+        //
         $('#' + $table.attr('id') + ' tbody').on('click', 'button.btn-edit', function () {
             let data = $table_datatables.row($(this).parents('tr')).data();
             location.href = $edit_url.val() + '/?title=' + data[0];
+        });
+
+        //
+        // Trigger like function on 'Like' action button click
+        //
+        $('#' + $table.attr('id') + ' tbody').on('click', 'button.btn-like', function () {
+
+            let data = $table_datatables.row($(this).parents('tr')).data();
+
+            $.post($like_url.val(), {
+                'title': data[0],
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+            }, function () {
+                alert('likey');
+            })
         });
     }
     catch (ex) {

@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^details.+/?$', Movies.details, name='details'),
     url(r'^edit.+/?$', Movies.edit, name='edit'),
     path('delete', Movies.delete, name='delete'),
+    path('like', Movies.like, name='like'),
 ]
