@@ -18,6 +18,7 @@
 
 {% block content %}
 
+    <input type="hidden" id="movies-edit-url" value="{% url 'movies:edit' %}"/>
     <input type="hidden" id="movies-delete-url" value="{% url 'movies:delete' %}"/>
 
     <div class="box box-default">

@@ -1,0 +1,43 @@
+{% extends 'movies/layout.html' %}
+{% load static %}
+
+
+{% block js %}
+    <script src="{% static 'common/js/forms.js' %}"></script>
+    <script src="{% static 'movies/js/edit.js' %}"></script>
+{% endblock %}
+
+
+{% block css %}
+{% endblock %}
+
+
+{% block title %}{% block navtitle %}Add Movie Title{% endblock %}{% endblock %}
+
+{% block content %}
+
+    <input id="check-title-url" type="hidden" value="{% url 'movies:checktitle' %}"/>
+    <input id="details-url" type="hidden" value="{% url 'movies:details' %}"/>
+
+    <div class="box box-default">
+
+        <div class="box-body">
+
+
+            <form id="edit-form" method="POST">
+                {# Title #}
+                <div class="form-group has-feedback">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                    <span class="help-block"></span>
+                </div>
+
+                <input type="hidden" value="{{ prev_title }}" name="prev-title" id="prev-title"/>
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-primary">Edit</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

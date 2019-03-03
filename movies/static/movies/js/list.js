@@ -2,6 +2,7 @@
 
 $(function () {
 
+    let $edit_url = $('#movies-edit-url');
     let $delete_url = $('#movies-delete-url');
 
     let $table = $('#movies-list');
@@ -32,6 +33,11 @@ $(function () {
 
             $delete_title.html(data[0]);
             $delete_modal.modal('show');
+        });
+
+        $('#' + $table.attr('id') + ' tbody').on('click', 'button.btn-edit', function () {
+            let data = $table_datatables.row($(this).parents('tr')).data();
+            location.href = $edit_url.val() + '/?title=' + data[0];
         });
     }
     catch (ex) {

@@ -46,29 +46,69 @@ class Movies:
         if request.method == 'GET':
 
             title = request.GET.get('title')
-            is_new = bool(request.GET.get('new'))
+            
+            try:
+                is_new = bool(request.GET.get('new'))
+            except:
+                is_new = False
+
+            try:
+                is_edit = bool(request.GET.get('edit'))
+            except:
+                is_edit = False
 
             if title:
 
-                is_seen = models.Movies.objects.filter(title=str(title)).exists()
-                return render(request, 'movies/pages/details.html', {'title': title, 'new': is_new, 'seen': is_seen})
+                if is_new:
+                    is_seen = models.Movies.objects.filter(title=str(title)).exists()
+                    return render(request, 'movies/pages/details.html',
+                                  {'title': title, 'new': is_new, 'seen': is_seen})
+
+                elif is_edit:
+                    return render(request, 'movies/pages/details.html',
+                                  {'title': title, 'edit': is_edit})
 
         return redirect('/')
 
+    @staticmethod
+    def edit(request):
+
+        if request.method == 'GET':
+
+            title = request.GET.get('title')
+
+            if title:
+                is_seen = models.Movies.objects.filter(title=str(title)).exists()
+                return render(request, 'movies/pages/edit.html', {'form': MoviesForm(), 'prev_title': title})
+
+        if request.method == 'POST':
+
+            form = MoviesForm(request.POST)
+
+            prev_title = request.POST.get('prev-title')
+
+            if form.is_valid():
+
+                to_be_edited = models.Movies.objects.get(title=prev_title)
+                to_be_edited.title = form.cleaned_data.get('title')
+                to_be_edited.save()
+
+                return JsonResponse({'success': True}, status=200)
+
+            else:
+                return JsonResponse({'success': False}, status=400)
+
+        return redirect('/')
 
     @staticmethod
     def delete(request):
 
         if request.method == 'POST':
-
-            print(request.POST.get('title'))
-
             to_be_deleted = models.Movies.objects.get(title=request.POST.get('title'))
             to_be_deleted.is_active = False
             to_be_deleted.save()
 
         return HttpResponse()
-
 
     @staticmethod
     def check_title(request):
