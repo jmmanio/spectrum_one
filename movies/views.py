@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 import movies.models as models
 from movies.forms import MoviesForm
 
+from django.contrib.auth.decorators import login_required
+
 
 class Movies:
 
@@ -18,26 +20,32 @@ class Movies:
             btn_liked = '<button class="btn btn-like btn-primary">Like</button>'
             btn_not_liked = '<button class="btn btn-like btn-default">Like</button>'
 
-            for movie in movies:
+            if request.user.is_authenticated:
+                for movie in movies:
 
-                try:
-                    last_like = models.Likes.objects.filter(movies=movie).latest('timestamp')
+                    try:
+                        last_like = models.Likes.objects.filter(movies=movie).latest('timestamp')
 
-                    if last_like.is_liked:
-                        like_button = btn_liked
-                    else:
+                        if last_like.is_liked:
+                            like_button = btn_liked
+                        else:
+                            like_button = btn_not_liked
+
+                    except Exception as e:
                         like_button = btn_not_liked
 
-                except Exception as e:
-                    like_button = btn_not_liked
+                    data_movies.append([movie.title, like_button,])
 
-                data_movies.append([movie.title, like_button,])
+            else:
+                for movie in movies:
+                    data_movies.append([movie.title,])
 
             return JsonResponse({'data': data_movies}, safe=False)
 
         return render(request, 'movies/pages/list.html')
 
     @staticmethod
+    @login_required
     def add(request):
 
         if request.method == 'POST':
@@ -86,6 +94,7 @@ class Movies:
         return redirect('/')
 
     @staticmethod
+    @login_required
     def edit(request):
 
         if request.method == 'GET':
@@ -116,6 +125,7 @@ class Movies:
         return redirect('/')
 
     @staticmethod
+    @login_required
     def like(request):
         if request.method == 'POST':
 
@@ -137,6 +147,7 @@ class Movies:
         return JsonResponse({'success': False})
 
     @staticmethod
+    @login_required
     def delete(request):
 
         if request.method == 'POST':
@@ -147,6 +158,7 @@ class Movies:
         return HttpResponse()
 
     @staticmethod
+    @login_required
     def check_title(request):
 
         if request.method == 'GET':

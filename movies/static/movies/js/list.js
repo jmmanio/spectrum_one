@@ -16,8 +16,8 @@ $(function () {
     //
     // Initialize DataTables instance
     //
-    try {
 
+    if ($table.find('thead tr th').length > 1) {
         // 0 - Title
         // 1 - Like button
         // 2 - Action buttons
@@ -43,7 +43,6 @@ $(function () {
                     "data": null,
                     "defaultContent": "<button class='btn btn-edit btn-default'>Edit</button>&nbsp;&nbsp;<button class='btn btn-delete btn-default'>Delete</button>"
                 }],
-            "autoWidth": true,
         });
 
         //
@@ -87,11 +86,13 @@ $(function () {
             })
         });
     }
-    catch (ex) {
+
+    else {
         $table_datatables = $table.DataTable({
             'ajax': window.location.pathname
         });
     }
+
 
     //
     // Delete selected movie title on delete button click
