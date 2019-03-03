@@ -139,7 +139,7 @@ $(function () {
     $error_msg.hide();
 
 
-    $form_username.on('keyup change', function () {
+    $form_username.on('change', function () {
         is_valid_username = check_username();
     });
 

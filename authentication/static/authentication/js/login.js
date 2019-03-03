@@ -2,15 +2,14 @@
 
 $(function () {
 
+    const $success_msg = $('#login-success');
+    const $warning_msg = $('#login-warning');
 
-    const $loginWarning      = $('#login-warning');
-    const $loginSuccess      = $('#login-success');
-
-    const $form              = $('#login-form');
+    const $form = $('#login-form');
 
     // Hide login status boxes on initial load
-    $loginWarning.hide();
-    $loginSuccess.hide();
+    $success_msg.hide();
+    $warning_msg.hide();
 
 
     // On login form submit
@@ -18,18 +17,15 @@ $(function () {
 
         event.preventDefault();
 
-        console.log($form.serialize());
-
-        $.post('/',
-            $form.serialize(), function () {
+        $.post(window.location.pathname, $form.serialize(), function () {
             // Authenticated
-            $loginWarning.hide();
-            $loginSuccess.show();
+            $warning_msg.hide();
+            $success_msg.show();
         })
             .fail(function () {
                 // Incorrect password
-                $loginWarning.show();
-                $loginSuccess.hide();
+                $warning_msg.show();
+                $success_msg.hide();
             });
     });
 });

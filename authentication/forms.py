@@ -31,3 +31,21 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2')
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True,
+                               label='Username',
+                               min_length=2,
+                               widget=forms.TextInput(
+                                   attrs={'class': 'form-control',
+                                          'placeholder': 'Username',
+                                          'id': 'username'}, ))
+
+    password = forms.CharField(required=True,
+                               label='Password',
+                               min_length=2,
+                               widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control',
+                                          'placeholder': 'Password',
+                                          'id': 'password'}))

@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render
-from .forms import RegisterForm
+from .forms import RegisterForm, LoginForm
 from django.contrib.auth.models import User
 
 
@@ -26,15 +26,32 @@ class Authentication:
                 return JsonResponse({'success': True}, status=200)
 
             else:
-                print(form)
-                return JsonResponse({'success': False, 'data': str(form)}, status=400)
+                return JsonResponse({'success': False}, status=400)
 
         else:
             return render(request, 'authentication/pages/register.html', {'form': RegisterForm()})
 
     @staticmethod
     def login(request):
-        return render(request, 'authentication/pages/login.html')
+
+        if request.method == 'POST':
+
+            form = LoginForm(request.POST)
+
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+
+                user = authenticate(username=username, password=password)
+
+                if user is not None:
+                    login(request, user)
+                    return JsonResponse({'success': True}, status=200)
+
+            return JsonResponse({'success': False}, status=400)
+
+        else:
+            return render(request, 'authentication/pages/login.html', {'form': LoginForm()})
 
     @staticmethod
     def check_username(request):
