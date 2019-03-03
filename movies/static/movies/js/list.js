@@ -22,12 +22,9 @@ $(function () {
             "columnDefs": [{
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<button class='btn-edit'>Edit</button>&nbsp;&nbsp;<button class='btn-delete'>Delete</button>" +
-                    "&nbsp;&nbsp;<button class='btn-like'>Like</button>"
+                "defaultContent": "<button class='btn btn-edit btn-default'>Edit</button>&nbsp;&nbsp;<button class='btn btn-delete btn-default'>Delete</button>"
             }],
-            "createdRow": function (row, data, dataIndex) {
-                console.log(data[0]);
-            },
+            "autoWidth": true,
         });
 
         //

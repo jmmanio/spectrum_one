@@ -15,8 +15,23 @@ class Movies:
 
             data_movies = list()
 
+            btn_liked = '<button class="btn btn-like btn-primary">Like</button>'
+            btn_not_liked = '<button class="btn btn-like btn-default">Like</button>'
+
             for movie in movies:
-                data_movies.append([movie.title, ])
+
+                try:
+                    last_like = models.Likes.objects.filter(movies=movie).latest('timestamp')
+
+                    if last_like.is_liked:
+                        like_button = btn_liked
+                    else:
+                        like_button = btn_not_liked
+
+                except Exception as e:
+                    like_button = btn_not_liked
+
+                data_movies.append([movie.title, like_button,])
 
             return JsonResponse({'data': data_movies}, safe=False)
 
@@ -110,9 +125,9 @@ class Movies:
 
             try:
                 last_like = models.Likes.objects.filter(movies=movie).latest('timestamp')
-
-                new_like = models.Likes(movies=movie, is_liked=last_like.is_liked)
+                new_like = models.Likes(movies=movie, is_liked=not last_like.is_liked)
                 new_like.save()
+
             except Exception as e:
                 new_like = models.Likes(movies=movie, is_liked=True)
                 new_like.save()
