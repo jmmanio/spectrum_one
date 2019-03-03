@@ -3,6 +3,7 @@
 $(function () {
 
     const $check_title_url = $('#check-title-url');
+    const $details_url = $('#details-url');
 
     const $form_title = $('#title');
     const $form = $('#add-form');
@@ -32,7 +33,7 @@ $(function () {
                         is_valid_title = false;
                     });
 
-            }, 250);
+            }, 100);
         }
 
         clear_valid($form_title);
@@ -51,7 +52,7 @@ $(function () {
 
             $.post(window.location.pathname, $form.serialize(), function () {
 
-                alert('Successfully added movie title');
+                location.href = $details_url.val() + '/?title=' + $form_title.val() + '&new=1';
             }).fail(function (data) {
 
                 alert('Failed to contact server. Please try again');

@@ -1,0 +1,46 @@
+{% extends 'movies/layout.html' %}
+{% load static %}
+
+
+{% block js %}
+{% endblock %}
+
+
+{% block css %}
+{% endblock %}
+
+
+{% block title %}{% block navtitle %}Details for movie <b>{{ title }}</b>{% endblock %}{% endblock %}
+
+
+{% block alert %}
+
+    {% if seen and new %}
+        <br/>
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Success!</h4>
+            "<b>{{ title }}</b>" successfully created!
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="box box-default">
+
+        <div class="box-body">
+            {% if seen %}
+                <p>Movie details goes here</p>
+            {% else %}
+                <p><b>Detail not found!</b></p>
+                <a href="{% url 'list' %}">Go back to movies list</a>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
