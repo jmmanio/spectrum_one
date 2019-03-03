@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     'authentication.apps.AuthenticationConfig',
     'cdn.apps.CdnConfig',
+    'common.apps.CommonConfig',
     'movies.apps.MoviesConfig',
 ]
 
