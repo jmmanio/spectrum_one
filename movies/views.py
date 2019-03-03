@@ -24,7 +24,8 @@ class Movies:
                 for movie in movies:
 
                     try:
-                        last_like = models.Likes.objects.filter(movies=movie, user_id=int(request.user.id)).latest('timestamp')
+                        last_like = models.Likes.objects.filter(movies=movie, user_id=int(request.user.id)).latest(
+                            'timestamp')
 
                         if last_like.is_liked:
                             like_button = btn_liked
@@ -42,7 +43,7 @@ class Movies:
 
             return JsonResponse({'data': data_movies}, safe=False)
 
-        return render(request, 'movies/pages/list.html')
+        return render(request, 'movies/pages/list.html', {'greetings': True})
 
     @staticmethod
     @login_required

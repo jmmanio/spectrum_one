@@ -67,6 +67,24 @@
 
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+
+                        {% if greetings %}
+                            <li>
+                                <a href="#">
+                                    {# Last visit record  #}
+                                    <small>
+                                        {% if request.session.prev_visit_count <= 1 %}
+                                            Welcome to our site!
+                                        {% else %}
+                                            Welcome back!
+                                        {% endif %}
+                                        You've visited this page last {{ request.session.prev_last_visit }}
+                                    </small>
+                                </a>
+                            </li>
+                        {% endif %}
+
+
                         {% if user.is_authenticated %}
                             <li>
                                 <a href="{% url 'authentication:logout' %}">
