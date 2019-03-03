@@ -24,7 +24,10 @@ $(function () {
                 "data": null,
                 "defaultContent": "<button class='btn-edit'>Edit</button>&nbsp;&nbsp;<button class='btn-delete'>Delete</button>" +
                     "&nbsp;&nbsp;<button class='btn-like'>Like</button>"
-            }]
+            }],
+            "createdRow": function (row, data, dataIndex) {
+                console.log(data[0]);
+            },
         });
 
         //
@@ -50,13 +53,21 @@ $(function () {
         //
         $('#' + $table.attr('id') + ' tbody').on('click', 'button.btn-like', function () {
 
+            let $button = $(this);
             let data = $table_datatables.row($(this).parents('tr')).data();
 
             $.post($like_url.val(), {
                 'title': data[0],
                 'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
             }, function () {
-                alert('likey');
+
+
+                if ($button.hasClass('btn-primary')) {
+                    $button.removeClass('btn-primary');
+                }
+                else {
+                    $button.addClass('btn-primary');
+                }
             })
         });
     }

@@ -117,7 +117,9 @@ class Movies:
                 new_like = models.Likes(movies=movie, is_liked=True)
                 new_like.save()
 
-            return HttpResponse()
+            return JsonResponse({'success': True})
+
+        return JsonResponse({'success': False})
 
     @staticmethod
     def delete(request):
