@@ -24,7 +24,7 @@ class Movies:
                 for movie in movies:
 
                     try:
-                        last_like = models.Likes.objects.filter(movies=movie).latest('timestamp')
+                        last_like = models.Likes.objects.filter(movies=movie, user_id=int(request.user.id)).latest('timestamp')
 
                         if last_like.is_liked:
                             like_button = btn_liked
@@ -34,11 +34,11 @@ class Movies:
                     except Exception as e:
                         like_button = btn_not_liked
 
-                    data_movies.append([movie.title, like_button,])
+                    data_movies.append([movie.title, like_button, ])
 
             else:
                 for movie in movies:
-                    data_movies.append([movie.title,])
+                    data_movies.append([movie.title, ])
 
             return JsonResponse({'data': data_movies}, safe=False)
 
@@ -133,13 +133,15 @@ class Movies:
 
             movie = models.Movies.objects.get(title=title)
 
+            user_id = int(request.user.id)
+
             try:
-                last_like = models.Likes.objects.filter(movies=movie).latest('timestamp')
-                new_like = models.Likes(movies=movie, is_liked=not last_like.is_liked)
+                last_like = models.Likes.objects.filter(movies=movie, user_id=user_id).latest('timestamp')
+                new_like = models.Likes(movies=movie, user_id=user_id, is_liked=not last_like.is_liked)
                 new_like.save()
 
             except Exception as e:
-                new_like = models.Likes(movies=movie, is_liked=True)
+                new_like = models.Likes(movies=movie, user_id=user_id, is_liked=True)
                 new_like.save()
 
             return JsonResponse({'success': True})
