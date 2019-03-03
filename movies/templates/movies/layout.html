@@ -8,6 +8,7 @@
 
     <title>{% block title %}{% endblock %}</title>
 
+    {% load static %}
 
     {# JS #}
     {% include 'cdn/js/jquery.html' %}
@@ -23,6 +24,7 @@
     {% include 'cdn/css/bootstrap.html' %}
     {% include 'cdn/css/font-awesome.html' %}
     {% include 'cdn/css/admin-lte.html' %}
+    <link rel="shortcut icon" href="{% static 'common/img/favicon.ico' %}"/>
 
     {# Custom CSS #}
     {% block css %}
