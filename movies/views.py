@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 import movies.models as models
 from movies.forms import MoviesForm
@@ -48,14 +48,26 @@ class Movies:
             title = request.GET.get('title')
             is_new = bool(request.GET.get('new'))
 
-            print(title)
-
             if title:
 
                 is_seen = models.Movies.objects.filter(title=str(title)).exists()
                 return render(request, 'movies/pages/details.html', {'title': title, 'new': is_new, 'seen': is_seen})
 
         return redirect('/')
+
+
+    @staticmethod
+    def delete(request):
+
+        if request.method == 'POST':
+
+            print(request.POST.get('title'))
+
+            to_be_deleted = models.Movies.objects.get(title=request.POST.get('title'))
+            to_be_deleted.delete()
+
+        return HttpResponse()
+
 
     @staticmethod
     def check_title(request):

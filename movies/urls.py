@@ -8,4 +8,5 @@ urlpatterns = [
     path('checktitle', Movies.check_title, name='checktitle'),
     path('add', Movies.add, name='add'),
     url(r'^details.+/?$', Movies.details, name='details'),
+    path('delete', Movies.delete, name='delete'),
 ]
