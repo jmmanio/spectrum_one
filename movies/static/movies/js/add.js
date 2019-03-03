@@ -33,14 +33,14 @@ $(function () {
                         is_valid_title = false;
                     });
 
-            }, 100);
+            }, 500);
         }
 
         clear_valid($form_title);
         is_valid_title = false;
     }
 
-    $form_title.on('keydown change', function () {
+    $form_title.on('keyup keydown', function () {
         check_title();
     });
 
