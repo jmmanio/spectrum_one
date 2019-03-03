@@ -104,7 +104,9 @@ $(function () {
             'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
         }, function () {
             alert('Record successfully deleted!');
-            location.reload();
+            $delete_modal.modal('hide');
+            // Reload DataTables referencing data from AJAX source
+            $table_datatables.ajax.reload();
         });
     });
 });
