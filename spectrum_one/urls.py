@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.urls import include, path
 
-import movies.views as movies
-from authentication.views import Authentication
 
+from authentication.views import Authentication
+from movies.views import Movies
 
 urlpatterns = [
 
@@ -25,5 +25,5 @@ urlpatterns = [
 
     path('login', Authentication.login, name='login'),
     path('register', Authentication.register, name='register'),
-    path('', movies.index, name='index'),
+    path('', Movies.list, name='list'),
 ]

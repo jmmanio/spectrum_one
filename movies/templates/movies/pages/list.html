@@ -3,12 +3,14 @@
 
 
 {% block js %}
-    <script src="{% static 'movies/js/pages/index.js' %}"></script>
+    {% include 'cdn/js/datatables.html' %}
+    <script src="{% static 'movies/js/list.js' %}"></script>
 {% endblock %}
 
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'movies/css/index.css' %}"/>
+    {% include 'cdn/css/datatables.html' %}
+    <link rel="stylesheet" href="{% static 'movies/css/list.css' %}"/>
 {% endblock %}
 
 
