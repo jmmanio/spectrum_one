@@ -17,13 +17,32 @@ $(function () {
     // Initialize DataTables instance
     //
     try {
+
+        // 0 - Title
+        // 1 - Like button
+        // 2 - Action buttons
         $table_datatables = $table.DataTable({
             'ajax': window.location.pathname,
-            "columnDefs": [{
-                "targets": -1,
-                "data": null,
-                "defaultContent": "<button class='btn btn-edit btn-default'>Edit</button>&nbsp;&nbsp;<button class='btn btn-delete btn-default'>Delete</button>"
-            }],
+            "columnDefs": [
+
+                // Width
+                {
+                    "targets": [1],
+                    "width": "10px",
+                },
+
+                // Ordering
+                {
+                    "targets": [1, -1],
+                    "orderable": false
+                },
+
+                // Custom buttons
+                {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button class='btn btn-edit btn-default'>Edit</button>&nbsp;&nbsp;<button class='btn btn-delete btn-default'>Delete</button>"
+                }],
             "autoWidth": true,
         });
 
