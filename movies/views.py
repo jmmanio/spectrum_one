@@ -11,7 +11,7 @@ class Movies:
 
         if request.GET:
 
-            movies = models.Movies.objects.all().order_by('title')
+            movies = models.Movies.objects.filter(is_active=True).order_by('title')
 
             data_movies = list()
 
@@ -64,7 +64,8 @@ class Movies:
             print(request.POST.get('title'))
 
             to_be_deleted = models.Movies.objects.get(title=request.POST.get('title'))
-            to_be_deleted.delete()
+            to_be_deleted.is_active = False
+            to_be_deleted.save()
 
         return HttpResponse()
 
