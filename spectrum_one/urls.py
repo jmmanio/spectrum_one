@@ -22,6 +22,7 @@ from movies.views import Movies
 urlpatterns = [
 
     path('auth/', include(('authentication.urls', 'authentication'))),
+    path('movies/', include(('movies.urls', 'movies'))),
 
     path('login', Authentication.login, name='login'),
     path('register', Authentication.register, name='register'),

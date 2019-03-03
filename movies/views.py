@@ -15,8 +15,16 @@ class Movies:
             data_movies = list()
 
             for movie in movies:
-                data_movies.append([movie.title,])
+                data_movies.append([movie.title, ])
 
             return django.http.JsonResponse({'data': data_movies}, safe=False)
 
         return render(request, 'movies/pages/list.html')
+
+    @staticmethod
+    def add(request):
+
+        if request.method == 'POST':
+            pass
+
+        return render(request, 'movies/pages/add.html')
