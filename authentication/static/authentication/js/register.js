@@ -15,8 +15,8 @@ $(function () {
     let is_valid_username = false;
     let is_valid_password = false;
 
-    let username_setTimeout = false;
-    let password_setTimeout = false;
+    let username_setTimeout = null;
+    let password_setTimeout = null;
 
 
     //
@@ -35,21 +35,21 @@ $(function () {
 
             username_setTimeout = setTimeout(function () {
 
-                $.get('/auth/checkuser', { 'username': $form_username.val() }, function (data) {
+                $.get('/auth/checkuser', {'username': $form_username.val()}, function (data) {
                     is_valid($form_username, 'Username is available');
-                    return true;
+                    is_valid_username = true;
                 })
                     .fail(function () {
 
                         is_invalid($form_username, 'Username already taken');
-                        return false;
+                        is_valid_username = false;
                     });
-            }), 500;
+            }, 500);
         }
 
         clear_valid($form_username);
 
-        return false;
+        is_valid_username = false;
     }
 
     //
@@ -71,12 +71,12 @@ $(function () {
                 if ($form_password.val() === $form_confirm.val()) {
                     is_valid($form_password);
                     is_valid($form_confirm);
-                    return true;
+                    is_valid_password = true;
                 }
                 else {
                     is_invalid($form_password);
                     is_invalid($form_confirm, 'Passwords do not match');
-                    return false;
+                    is_valid_password = false;
                 }
             }, 500);
         }
@@ -84,7 +84,7 @@ $(function () {
         clear_valid($form_password);
         clear_valid($form_confirm);
 
-        return false;
+        is_valid_password = false;
     }
 
 
@@ -92,17 +92,17 @@ $(function () {
     $error_msg.hide();
 
 
-    $form_username.on('change', function () {
+    $form_username.on('keyup keydown', function () {
         is_valid_username = check_username();
     });
 
 
-    $form_password.on('keyup change', function () {
+    $form_password.on('keyup keydown', function () {
         is_valid_password = check_password();
     });
 
 
-    $form_confirm.on('keyup change', function () {
+    $form_confirm.on('keyup keydown', function () {
         is_valid_password = check_password();
     });
 
@@ -111,15 +111,18 @@ $(function () {
 
         event.preventDefault();
 
-        $.post(window.location.pathname, $form.serialize(), function (data) {
+        if (is_valid_username && is_valid_password) {
 
-            $form.find('input, button').attr('disabled', 'disabled');
+            $.post(window.location.pathname, $form.serialize(), function (data) {
 
-            $error_msg.hide();
-            $success_msg.show();
-        })
-            .fail(function() {
-                $error_msg.show();
-            });
+                $form.find('input, button').attr('disabled', 'disabled');
+
+                $error_msg.hide();
+                $success_msg.show();
+            })
+                .fail(function () {
+                    $error_msg.show();
+                });
+        }
     });
 });

@@ -21,6 +21,7 @@ $(function () {
             // Authenticated
             $warning_msg.hide();
             $success_msg.show();
+            window.location.reload();
         })
             .fail(function () {
                 // Incorrect password
