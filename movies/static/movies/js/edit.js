@@ -5,7 +5,7 @@ $(function () {
     const $check_title_url = $('#check-title-url');
     const $details_url = $('#details-url');
 
-    const $form_title_prev = $('#title-prev');
+    const $form_title_prev = $('#prev-title');
     const $form_title = $('#title');
     const $form = $('#edit-form');
 
@@ -34,14 +34,18 @@ $(function () {
                         is_valid_title = false;
                     });
 
-            }, 100);
+            }, 250);
         }
 
         clear_valid($form_title);
         is_valid_title = false;
     }
 
-    $form_title.on('keydown change', function () {
+    // Initial value to title text input
+    $form_title.val( $form_title_prev.val() );
+
+
+    $form_title.on('keyup keydown', function () {
         check_title();
     });
 
