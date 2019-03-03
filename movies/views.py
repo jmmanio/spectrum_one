@@ -1,6 +1,7 @@
-import django.http
+from django.http import JsonResponse
 from django.shortcuts import render
 import movies.models as models
+from movies.forms import MoviesForm
 
 
 class Movies:
@@ -17,7 +18,7 @@ class Movies:
             for movie in movies:
                 data_movies.append([movie.title, ])
 
-            return django.http.JsonResponse({'data': data_movies}, safe=False)
+            return JsonResponse({'data': data_movies}, safe=False)
 
         return render(request, 'movies/pages/list.html')
 
@@ -25,6 +26,32 @@ class Movies:
     def add(request):
 
         if request.method == 'POST':
-            pass
 
-        return render(request, 'movies/pages/add.html')
+            form = MoviesForm(request.POST)
+
+            if form.is_valid():
+
+                form.save()
+
+                return JsonResponse({'success': True}, status=200)
+
+            else:
+                return JsonResponse({'success': False}, status=400)
+
+        return render(request, 'movies/pages/add.html', {'form': MoviesForm()})
+
+    @staticmethod
+    def check_title(request):
+
+        if request.method == 'GET':
+
+            try:
+                exists = models.Movies.objects.filter(title=str(request.GET.get('title'))).exists()
+
+                if not exists:
+                    return JsonResponse({'success': True}, status=200)
+
+            except Exception as e:
+                pass
+
+            return JsonResponse({'success': False}, status=400)

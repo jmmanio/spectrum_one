@@ -3,6 +3,8 @@
 
 
 {% block js %}
+    <script src="{% static 'common/js/forms.js' %}"></script>
+    <script src="{% static 'movies/js/add.js' %}"></script>
 {% endblock %}
 
 
@@ -13,11 +15,27 @@
 {% block title %}{% block navtitle %}Add Movie Title{% endblock %}{% endblock %}
 
 {% block content %}
+
+    <input id="check-title-url" type="hidden" value="{% url 'movies:checktitle' %}"/>
+
     <div class="box box-default">
 
         <div class="box-body">
 
-            <p>Add Movies</p>
+
+            <form id="add-form" method="POST">
+                {# Title #}
+                <div class="form-group has-feedback">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                    <span class="help-block"></span>
+                </div>
+
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+            </form>
         </div>
     </div>
 {% endblock %}
