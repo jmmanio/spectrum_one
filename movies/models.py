@@ -7,3 +7,14 @@ class Movies(models.Model):
 
     class Meta:
         db_table = 'movies'
+
+
+
+class Likes(models.Model):
+
+    movies = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    is_liked = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'likes'
