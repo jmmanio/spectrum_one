@@ -5,27 +5,46 @@
 {% block title %}Register{% endblock %}
 
 
+{% block js %}
+    <script src="{% static 'authentication/js/register.js' %}"></script>
+{% endblock %}
+
 {% block content %}
+
+    <input type="hidden" id="check-username-url" value="{% url 'authentication:check-username' %}"/>
+
+
     <p class="login-box-msg">Register a new account</p>
 
-    <form id="login-form" method="POST">
+    <div class="alert alert-error" id="register-error">
+        Registration cannot be completed at the moment. Please try again.
+    </div>
 
-        {# Email #}
+    <div class="alert alert-success" id="register-success">
+        Registration successful! Proceed to <a href="/">movie list</a>.
+    </div>
+
+    <form id="register-form" method="POST">
+
+        {# Username #}
         <div class="form-group has-feedback">
-            <input id="email" type="text" class="form-control" placeholder="Email" required>
+            {{ form.username }}
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            <span class="help-block"></span>
         </div>
 
         {# Password #}
         <div class="form-group has-feedback">
-            <input id="password" type="password" class="form-control" placeholder="Password" required>
+            {{ form.password1 }}
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <span class="help-block"></span>
         </div>
 
         {# Confirm password #}
         <div class="form-group has-feedback">
-            <input id="password" type="password" class="form-control" placeholder="Confirm password" required>
+            {{ form.password2 }}
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <span class="help-block"></span>
         </div>
 
         {% csrf_token %}
@@ -35,7 +54,7 @@
     </form>
 
     <p class="auth-alternative-option">
-        Already registered? <a href="#">Log in</a>
+        Already registered? <a href="{% url 'login' %}">Log in</a>
     </p>
 
 {% endblock %}

@@ -7,10 +7,6 @@ $(function () {
     const $loginSuccess      = $('#login-success');
 
     const $form              = $('#login-form');
-    const $form_usernameText = $('#username');
-    const $form_passwordText = $('#password');
-    const $form_csrfToken    = $('input[name=csrfmiddlewaretoken]');
-
 
     // Hide login status boxes on initial load
     $loginWarning.hide();
@@ -22,11 +18,10 @@ $(function () {
 
         event.preventDefault();
 
-        $.post('/', {
-            username: $form_usernameText.val(),
-            password: $form_passwordText.val(),
-            csrfmiddlewaretoken: $form_csrfToken.val()
-        }, function () {
+        console.log($form.serialize());
+
+        $.post('/',
+            $form.serialize(), function () {
             // Authenticated
             $loginWarning.hide();
             $loginSuccess.show();
