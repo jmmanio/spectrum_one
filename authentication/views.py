@@ -1,5 +1,5 @@
-from django.http import JsonResponse
-from django.contrib.auth import login, authenticate
+from django.http import JsonResponse, HttpResponseRedirect
+from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render
 from .forms import RegisterForm, LoginForm
 from django.contrib.auth.models import User
@@ -52,6 +52,11 @@ class Authentication:
 
         else:
             return render(request, 'authentication/pages/login.html', {'form': LoginForm()})
+
+    @staticmethod
+    def logout(request):
+        logout(request)
+        return HttpResponseRedirect('/')
 
     @staticmethod
     def check_username(request):
