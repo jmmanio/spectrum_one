@@ -56,7 +56,10 @@
                 <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/">Movie List</a></li>
+                        <li><a href="/">Movie List</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'movies:add' %}">Add Movie</a></li>
+                        {% endif %}
                     </ul>
                 </div>
 
